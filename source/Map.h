@@ -16,6 +16,6 @@ public:
   ~Map();
 
   void Init();
-  void Update(WINDOW *tmp);
-
+  void Render(WINDOW *map);
+  void Update();
 };

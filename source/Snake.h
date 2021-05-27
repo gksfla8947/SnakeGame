@@ -5,7 +5,7 @@
 using namespace std;
 
 class Snake {
-  vector<int> snake;
+  vector<char> snake;
   int posX, posY;
 public:
   Snake(int bodyNum);

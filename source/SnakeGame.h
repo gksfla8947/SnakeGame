@@ -2,14 +2,15 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include"Map.h"
+#include"StartScene.h"
+#include"GameScene.h"
 using namespace std;
 
 class SnakeGame {
-  int stagesNumber;
   bool isOver;
+  StartScene *intro;
+  GameScene *inGame;
 public:
-  SnakeGame(int numOfStages);
+  SnakeGame();
   void startGame();
-  void temp();
 };

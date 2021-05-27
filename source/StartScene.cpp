@@ -1,7 +1,6 @@
 #include"StartScene.h"
 
 StartScene::StartScene() {
-  
 }
 
 void StartScene::Draw() {

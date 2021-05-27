@@ -1,8 +1,7 @@
 #include<ncurses.h>
-#include"Scene.h"
 using namespace std;
 
-class StartScene : Scene {
+class StartScene{
 public:
   StartScene();
   void Draw();
