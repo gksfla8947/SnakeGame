@@ -1,9 +1,9 @@
-#include"SceneManger.h"
+#include"SceneManager.h"
 
 SceneManger::SceneManger() {
 }
 
-void SceneManger::addScene(Scene scene, string name) {
+void SceneManger::addScene(const Scene& scene, string name) {
   scenes[name] = scene;
 }
 

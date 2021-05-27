@@ -1,6 +1,10 @@
 #include"StartScene.h"
 
 StartScene::StartScene() {
+  
+}
+
+void StartScene::Draw() {
   initscr();
   start_color();
   curs_set(false);

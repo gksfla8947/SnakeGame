@@ -3,5 +3,5 @@
 Scene::Scene() {
 }
 
-void Scene:Draw() {
+void Scene::Draw() {
 }

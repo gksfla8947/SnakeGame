@@ -3,9 +3,6 @@
 #include<string>
 #include<vector>
 #include"SceneManager.h"
-#include"StartScene.h"
-#include"Map.h"
-#include"Snake.h"
 using namespace std;
 
 class SnakeGame {
@@ -17,7 +14,6 @@ public:
   }
 
   void startGame() {
-    sm.showScene("StartScene");
   }
 };
 
@@ -25,6 +21,8 @@ public:
 void temp();
 
 int main() {
+  SnakeGame main(1);
+  main.startGame();
   temp();
 }
 
