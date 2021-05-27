@@ -17,5 +17,5 @@ void Snake::init_snake_pos(Map& stage, int x, int y) {
   for(int i = 1; i <= snake.size(); i++) stage.map[x][y-i] = snake[i];
 }
 void Snake::move(Map& stage, int ch) {
-
+  stage.map[][]
 }

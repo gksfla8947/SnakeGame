@@ -1,5 +1,7 @@
 #include<ncurses.h>
 #include<vector>
+#include<pair>
+#include"Map.h"
 using namespace std;
 
 class Snake {

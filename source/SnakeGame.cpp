@@ -1,32 +1,12 @@
-#include<ncurses.h>
-#include<iostream>
-#include<string>
-#include<vector>
-#include"SceneManager.h"
-using namespace std;
+#include"SnakeGame.h"
 
-class SnakeGame {
-  int stagesNumber;
-  bool isOver;
-  SceneManger sm;
-public:
-  SnakeGame(int numOfStages): stagesNumber(numOfStages) {
-  }
+SnakeGame::SnakeGame(int numOfStages) {
 
-  void startGame() {
-  }
-};
-
-
-void temp();
-
-int main() {
-  SnakeGame main(1);
-  main.startGame();
-  temp();
 }
+void SnakeGame::startGame() {
 
-void temp() {
+}
+void SnakeGame::temp() {
   int row, col;
   initscr();
   start_color();
@@ -42,6 +22,9 @@ void temp() {
   wbkgd(gameboard, COLOR_PAIR(2));
   getmaxyx(gameboard, row, col);
   mvwprintw(gameboard, 0, col/2-5, "GAME");
+  Map mainMap;
+  mainMap.Init();
+  mainMap.Update(gameboard);
   wrefresh(gameboard);
 
   WINDOW *scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
