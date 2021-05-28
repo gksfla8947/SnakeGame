@@ -12,7 +12,7 @@ GameScene::GameScene() {
   missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
   stage = new Map();
   stage->Init();
-  gate->Init();
+  gate.Init();
   player = new Snake(*stage, 10);
   player->init_snake_pos(1, 12);
   isOver = false;
@@ -26,7 +26,7 @@ void GameScene::InitWindow() {
   wrefresh(scoreboard);
   wrefresh(missionboard);
   keypad(gameboard, true);
-  gate->set_Gatepos(*stage);
+  gate.set_Gatepos(*stage);
   stage->Render(gameboard);
 }
 
@@ -35,7 +35,7 @@ void GameScene::Run() {
   while(true) {
     int ch = wgetch(gameboard);
     if(ch == KEY_F(1)) break;
-    player->move(ch);
+    player->move(ch, gate);
     if(player->isDead()) {
       break;
     }

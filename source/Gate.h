@@ -1,16 +1,11 @@
-#include<ncurses.h>
-#include<string>
-#include<fstream>
-#include <ctime>
-#include<cstdlib>
 #include"Map.h"
-
-using namespace std;
+#include<ctime>
+#include<cstdlib>
 
 class Gate{
-  int gateX[2];
-  int gateY[2];
 public:
+  int gate_X[2];
+  int gate_Y[2];
   Gate();
   ~Gate();
 

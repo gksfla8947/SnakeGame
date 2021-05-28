@@ -61,6 +61,8 @@ void Map::Render(WINDOW *map){
   init_pair(4, COLOR_BLUE, COLOR_BLUE);
   init_pair(8, COLOR_YELLOW, COLOR_YELLOW);
   init_pair(9, COLOR_MAGENTA, COLOR_MAGENTA);
+  init_pair(7, COLOR_CYAN, COLOR_CYAN);
+  init_pair(10, COLOR_BLACK, COLOR_BLACK);
   for(int i = 0; i < HEIGHT; i++){
     for(int j = 0; j < WIDTH; j++){
       //attron(COLOR_PAIR(maps[i][j]));
@@ -73,7 +75,7 @@ void Map::Render(WINDOW *map){
           mvwaddch(map, i+1, j+1, '#' | COLOR_PAIR(2)); // 벽
           break;
         case '2':
-          mvwaddch(map, i+1, j+1, '@' | COLOR_PAIR(2)); // 벽
+          mvwaddch(map, i+1, j+1, '@' | COLOR_PAIR(10)); // 벽
           break;
         case '4':
           mvwaddch(map, i+1, j+1, 'O' | COLOR_PAIR(3)); // 스네이크 머리

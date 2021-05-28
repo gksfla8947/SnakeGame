@@ -28,7 +28,7 @@ void Snake::init_snake_pos(int x, int y) {
   }
 }
 
-void Snake::move(int ch) {
+void Snake::move(int ch, Gate gate) {
   for(int i = size-1; i > 0; i--) {
     snake[i].first = snake[i-1].first;
     snake[i].second = snake[i-1].second;
@@ -83,7 +83,7 @@ void Snake::move(int ch) {
   else if(direction == 'd') {
     headPosX += 1;
   }
-  Collision(stage->maps[headPosX][headPosY]);
+  Collision(stage->maps[headPosX][headPosY], gate);
   if(!dead) {
     snake[0].first = headPosX;
     snake[0].second = headPosY;
@@ -103,12 +103,47 @@ bool Snake::isDead() {
   return dead;
 }
 
-void Snake::Collision(char type) {
+void Snake::Collision(char type, Gate gate) {
   if(type == '1' || type == '2' || type == '3') {
     dead = true;
   }
   else if(type == '5') {
-
+    if(headPosY == gate.gate_X[0] && headPosX == gate.gate_Y[0]){
+      if(gate.gate_X[1] == 0){
+        headPosY = gate.gate_X[1] + 1;
+        headPosX = gate.gate_Y[1];
+      }
+      else if(gate.gate_X[1] == WIDTH-1){
+        headPosY = gate.gate_X[1] - 1;
+        headPosX = gate.gate_Y[1];
+      }
+      else if(gate.gate_Y[1] == 0){
+        headPosY = gate.gate_X[1];
+        headPosX = gate.gate_Y[1] + 1;
+      }
+      else if(gate.gate_Y[1] == HEIGHT-1){
+        headPosY = gate.gate_X[1];
+        headPosX = gate.gate_Y[1] - 1;
+      }
+    }
+    else{
+      if(gate.gate_X[0] == 0){
+        headPosY = gate.gate_X[0] + 1;
+        headPosX = gate.gate_Y[0];
+      }
+      else if(gate.gate_X[0] == WIDTH-1){
+        headPosY = gate.gate_X[0] - 1;
+        headPosX = gate.gate_Y[0];
+      }
+      else if(gate.gate_Y[0] == 0){
+        headPosY = gate.gate_X[0];
+        headPosX = gate.gate_Y[0] + 1;
+      }
+      else if(gate.gate_Y[0] == HEIGHT-1){
+        headPosY = gate.gate_X[0];
+        headPosX = gate.gate_Y[0] - 1;
+      }
+    }
   }
   else if(type == '6') {
     Growth();

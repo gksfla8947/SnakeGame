@@ -15,9 +15,9 @@ class Snake {
 public:
   Snake(Map& map, int bodyNum);
   void init_snake_pos(int x = 1, int y = 1);
-  void move(int ch);
+  void move(int ch, Gate gate);
   bool isDead();
-  void Collision(char type);
+  void Collision(char type, Gate gate);
 
   void Render();
 

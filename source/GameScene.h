@@ -10,7 +10,7 @@ class GameScene {
   WINDOW *missionboard;
   Map *stage;
   Snake *player;
-  Gate *gate;
+  Gate gate;
   bool isOver;
 public:
   GameScene();
