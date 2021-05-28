@@ -12,6 +12,7 @@ GameScene::GameScene() {
   missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
   stage = new Map();
   stage->Init();
+  gate->Init();
   player = new Snake(3);
   player->init_snake_pos(*stage, 1, 5);
 }
@@ -24,6 +25,7 @@ void GameScene::InitWindow() {
   wrefresh(scoreboard);
   wrefresh(missionboard);
   keypad(gameboard, true);
+  gate->set_Gatepos(*stage);
   stage->Render(gameboard);
 }
 

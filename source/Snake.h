@@ -1,11 +1,11 @@
 #include<ncurses.h>
 #include<vector>
 #include<utility>
-#include"Map.h"
+#include"Gate.h"
 using namespace std;
 
 class Snake {
-  vector<pair<int, int>> snake;
+  vector<pair<int, int> > snake;
   int size;
   char direction;
   int headPosX, headPosY;

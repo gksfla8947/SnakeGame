@@ -49,6 +49,9 @@ void Map::Render(WINDOW *map){
         case '3':
           mvwaddch(map, i+1, j+1, 'X' | COLOR_PAIR(4));
           break;
+        case '5':
+          mvwaddch(map, i+1, j+1, '^' | COLOR_PAIR(7));
+          break;
       }
       //attroff(COLOR_PAIR(maps[i][j]));
     }
