@@ -92,6 +92,7 @@ void Snake::move(int ch) {
     tailPosX = snake[size-1].first;
     tailPosY = snake[size-1].second;
     stage->Update(headPosX, headPosY, '4');
+
     for(int i = 1; i < size; i++) {
       stage->Update(snake[i].first, snake[i].second, '3');
     }
@@ -106,4 +107,26 @@ void Snake::Collision(char type) {
   if(type == '1' || type == '2' || type == '3') {
     dead = true;
   }
+  else if(type == '5') {
+
+  }
+  else if(type == '6') {
+    Growth();
+  }
+  else if(type == '7') {
+    Reduce();
+  }
+}
+
+void Snake::Growth() {
+  snake.push_back(make_pair(tailPosX, tailPosY));
+  size+=1;
+}
+
+void Snake::Reduce() {
+  snake.pop_back();
+  stage->Update(tailPosX, tailPosY, '0');
+  tailPosX = snake[size-1].first;
+  tailPosY = snake[size-1].second;
+  size-=1;
 }

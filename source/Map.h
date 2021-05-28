@@ -19,4 +19,5 @@ public:
   void Init();
   void Render(WINDOW *map);
   void Update(int x, int y, char value);
+  void make_item();
 };

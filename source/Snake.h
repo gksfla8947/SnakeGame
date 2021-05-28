@@ -18,4 +18,9 @@ public:
   void move(int ch);
   bool isDead();
   void Collision(char type);
+
+  void Render();
+
+  void Growth();
+  void Reduce();
 };

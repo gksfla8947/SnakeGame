@@ -8,9 +8,9 @@
 using namespace std;
 
 class Gate{
-public:
   int gateX[2];
   int gateY[2];
+public:
   Gate();
   ~Gate();
 
