@@ -6,5 +6,5 @@ SnakeGame::SnakeGame() {
 }
 void SnakeGame::startGame() {
   intro->Draw();
-  inGame->InitWindow();
+  inGame->Run();
 }

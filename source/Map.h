@@ -17,5 +17,5 @@ public:
 
   void Init();
   void Render(WINDOW *map);
-  void Update();
+  void Update(int x, int y, char value);
 };

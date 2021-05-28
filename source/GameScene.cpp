@@ -4,30 +4,44 @@ GameScene::GameScene() {
   initscr();
   start_color();
   curs_set(false);
+  noecho();
+  cbreak();
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
   gameboard = newwin(LINES, COLS/2+40, 0, 0);
   scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
   missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
+  stage = new Map();
+  stage->Init();
+  player = new Snake(3);
+  player->init_snake_pos(*stage, 1, 5);
 }
 
 void GameScene::InitWindow() {
   GameBoard();
   ScoreBoard();
   MissionBoard();
-
   wrefresh(gameboard);
   wrefresh(scoreboard);
   wrefresh(missionboard);
+  keypad(gameboard, true);
+  stage->Render(gameboard);
+}
 
-  getch();
-  Map *mymap = new Map();
-  mymap->Init();
-  mymap->Render(gameboard);
-  getch();
-  delwin(gameboard);
-  delwin(scoreboard);
-  delwin(missionboard);
+void GameScene::Run() {
+  InitWindow();
+  while(true) {
+    int ch = wgetch(gameboard);
+    if(ch == KEY_F(1)) break;
+    while(true) {
+      player->move(*stage, ch);
+    }
+    stage->Render(gameboard);
+  }
   endwin();
+}
+
+void GameScene::GameOver() {
+
 }
 
 void GameScene::GameBoard(){
