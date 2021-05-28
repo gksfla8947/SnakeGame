@@ -35,22 +35,28 @@ void Map::Render(WINDOW *map){
       switch (maps[i][j])
       {
         case '0':
-          mvwaddch(map, i+1, j+1, ' ' | COLOR_PAIR(5));
+          mvwaddch(map, i+1, j+1, ' ' | COLOR_PAIR(5)); // 공백
           break;
         case '1':
-          mvwaddch(map, i+1, j+1, '#' | COLOR_PAIR(2));
+          mvwaddch(map, i+1, j+1, '#' | COLOR_PAIR(2)); // 벽
           break;
         case '2':
-          mvwaddch(map, i+1, j+1, '@' | COLOR_PAIR(2));
+          mvwaddch(map, i+1, j+1, '@' | COLOR_PAIR(2)); // 벽
           break;
         case '4':
-          mvwaddch(map, i+1, j+1, 'O' | COLOR_PAIR(3));
+          mvwaddch(map, i+1, j+1, 'O' | COLOR_PAIR(3)); // 스네이크 머리
           break;
         case '3':
-          mvwaddch(map, i+1, j+1, 'X' | COLOR_PAIR(4));
+          mvwaddch(map, i+1, j+1, 'X' | COLOR_PAIR(4)); // 스네이크 몸
           break;
         case '5':
-          mvwaddch(map, i+1, j+1, '^' | COLOR_PAIR(7));
+          mvwaddch(map, i+1, j+1, '^' | COLOR_PAIR(7)); // 게이트
+          break;
+        case '6':
+          mvwaddch(map, i+1, j+1, 'G' | COLOR_PAIR(7)); // Growth item
+          break;
+        case '7':
+          mvwaddch(map, i+1, j+1, 'L' | COLOR_PAIR(7)); // Loss item
           break;
       }
       //attroff(COLOR_PAIR(maps[i][j]));

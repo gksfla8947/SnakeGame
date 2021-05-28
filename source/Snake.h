@@ -10,8 +10,12 @@ class Snake {
   char direction;
   int headPosX, headPosY;
   int tailPosX, tailPosY;
+  bool dead;
+  Map *stage;
 public:
-  Snake(int bodyNum);
-  void init_snake_pos(Map& stage, int x = 1, int y = 1);
-  void move(Map& stage, int ch);
+  Snake(Map& map, int bodyNum);
+  void init_snake_pos(int x = 1, int y = 1);
+  void move(int ch);
+  bool isDead();
+  void Collision(char type);
 };

@@ -1,14 +1,16 @@
 #include"Snake.h"
 
-Snake::Snake(int bodyNum) {
+Snake::Snake(Map& map, int bodyNum) {
   size = bodyNum + 1;
   direction = 'r';
+  dead = false;
+  stage = &map;
 }
 
 // 스네이크의 생성위치(x, y값은 1부터 시작) 설정
-void Snake::init_snake_pos(Map& stage, int x, int y) {
+void Snake::init_snake_pos(int x, int y) {
   for(int i = 1; i < snake.size(); i++) {
-    if(stage.maps[x][y-i] == 1) {
+    if(stage->maps[x][y-i] == 1) {
       return;
     }
   }
@@ -20,14 +22,13 @@ void Snake::init_snake_pos(Map& stage, int x, int y) {
   tailPosX = snake[size-1].first;
   tailPosY = snake[size-1].second;
 
-  stage.Update(snake[0].first, snake[0].second, '4');
+  stage->Update(snake[0].first, snake[0].second, '4');
   for(int i = 1; i < size; i++) {
-    stage.Update(snake[i].first, snake[i].second, '3');
+    stage->Update(snake[i].first, snake[i].second, '3');
   }
 }
 
-void Snake::move(Map& stage, int ch) {
-  stage.Update(snake[size-1].first, snake[size-1].second, '0');
+void Snake::move(int ch) {
   for(int i = size-1; i > 0; i--) {
     snake[i].first = snake[i-1].first;
     snake[i].second = snake[i-1].second;
@@ -37,20 +38,36 @@ void Snake::move(Map& stage, int ch) {
       if(direction != 'r') {
         direction = 'l';
       }
+      else {
+        dead = true;
+        return;
+      }
       break;
     case KEY_RIGHT:
       if(direction != 'l') {
         direction = 'r';
+      }
+      else {
+        dead = true;
+        return;
       }
       break;
     case KEY_UP:
       if(direction != 'd') {
         direction = 'u';
       }
+      else {
+        dead = true;
+        return;
+      }
       break;
     case KEY_DOWN:
       if(direction != 'u') {
         direction = 'd';
+      }
+      else {
+        dead = true;
+        return;
       }
       break;
   }
@@ -66,11 +83,27 @@ void Snake::move(Map& stage, int ch) {
   else if(direction == 'd') {
     headPosX += 1;
   }
-  snake[0].first = headPosX;
-  snake[0].second = headPosY;
+  Collision(stage->maps[headPosX][headPosY]);
+  if(!dead) {
+    snake[0].first = headPosX;
+    snake[0].second = headPosY;
 
-  stage.Update(snake[0].first, snake[0].second, '4');
-  for(int i = 1; i < size; i++) {
-    stage.Update(snake[i].first, snake[i].second, '3');
+    stage->Update(tailPosX, tailPosY, '0');
+    tailPosX = snake[size-1].first;
+    tailPosY = snake[size-1].second;
+    stage->Update(headPosX, headPosY, '4');
+    for(int i = 1; i < size; i++) {
+      stage->Update(snake[i].first, snake[i].second, '3');
+    }
+  }
+}
+
+bool Snake::isDead() {
+  return dead;
+}
+
+void Snake::Collision(char type) {
+  if(type == '1' || type == '2' || type == '3') {
+    dead = true;
   }
 }

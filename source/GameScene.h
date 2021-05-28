@@ -11,6 +11,7 @@ class GameScene {
   Map *stage;
   Snake *player;
   Gate *gate;
+  bool isOver;
 public:
   GameScene();
   void InitWindow();

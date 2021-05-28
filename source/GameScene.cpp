@@ -13,8 +13,9 @@ GameScene::GameScene() {
   stage = new Map();
   stage->Init();
   gate->Init();
-  player = new Snake(3);
-  player->init_snake_pos(*stage, 1, 5);
+  player = new Snake(*stage, 10);
+  player->init_snake_pos(1, 12);
+  isOver = false;
 }
 
 void GameScene::InitWindow() {
@@ -34,14 +35,18 @@ void GameScene::Run() {
   while(true) {
     int ch = wgetch(gameboard);
     if(ch == KEY_F(1)) break;
-    player->move(*stage, ch);
+    player->move(ch);
+    if(player->isDead()) {
+      break;
+    }
     stage->Render(gameboard);
   }
   endwin();
 }
 
 void GameScene::GameOver() {
-
+  stage->Init();
+  stage->Render(gameboard);
 }
 
 void GameScene::GameBoard(){
