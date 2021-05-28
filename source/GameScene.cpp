@@ -32,9 +32,7 @@ void GameScene::Run() {
   while(true) {
     int ch = wgetch(gameboard);
     if(ch == KEY_F(1)) break;
-    while(true) {
-      player->move(*stage, ch);
-    }
+    player->move(*stage, ch);
     stage->Render(gameboard);
   }
   endwin();

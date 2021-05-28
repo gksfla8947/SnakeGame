@@ -36,27 +36,35 @@ void Snake::move(Map& stage, int ch) {
     case KEY_LEFT:
       if(direction != 'r') {
         direction = 'l';
-        headPosY -= 1;
       }
       break;
     case KEY_RIGHT:
       if(direction != 'l') {
         direction = 'r';
-        headPosY += 1;
       }
       break;
     case KEY_UP:
       if(direction != 'd') {
         direction = 'u';
-        headPosX -= 1;
       }
       break;
     case KEY_DOWN:
       if(direction != 'u') {
         direction = 'd';
-        headPosX += 1;
       }
       break;
+  }
+  if(direction == 'l') {
+    headPosY -= 1;
+  }
+  else if(direction == 'r') {
+    headPosY += 1;
+  }
+  else if(direction == 'u') {
+    headPosX -= 1;
+  }
+  else if(direction == 'd') {
+    headPosX += 1;
   }
   snake[0].first = headPosX;
   snake[0].second = headPosY;
