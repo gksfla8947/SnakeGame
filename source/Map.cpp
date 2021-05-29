@@ -1,7 +1,10 @@
 #include"Map.h"
 
-Map::Map(){
-
+Map::Map(int objLen, int objGrowth, int objReduce, int objGate){
+  this->objLen = objLen;
+  this->objGrowth = objGrowth;
+  this->objReduce = objReduce;
+  this->objGate = objGate;
 }
 
 Map::~Map(){

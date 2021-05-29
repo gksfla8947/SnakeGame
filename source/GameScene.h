@@ -11,14 +11,19 @@ class GameScene {
   Map *stage;
   Snake *player;
   Gate gate;
-  bool isOver;
 public:
   GameScene();
   void InitWindow();
+  void InitGameboard();
+  void InitScoreboard();
+  void InitMissionboard();
+
   void Run();
   void GameOver();
 
-  void GameBoard();
-  void ScoreBoard();
-  void MissionBoard();
+  void UpdateGameBoard();
+  void UpdateScoreBoard();
+  void UpdateMissionBoard();
+
+  char *to_char(string s);
 };

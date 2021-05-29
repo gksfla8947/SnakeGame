@@ -10,22 +10,17 @@ GameScene::GameScene() {
   gameboard = newwin(LINES, COLS/2+40, 0, 0);
   scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
   missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
-  stage = new Map();
+  stage = new Map(10, 5, 2, 1);
   stage->Init();
   gate.Init();
-  player = new Snake(*stage, 10);
+  player = new Snake(*stage, 5);
   player->init_snake_pos(1, 12);
-  isOver = false;
 }
 
 void GameScene::InitWindow() {
-  GameBoard();
-  ScoreBoard();
-  MissionBoard();
-  wrefresh(gameboard);
-  wrefresh(scoreboard);
-  wrefresh(missionboard);
-  keypad(gameboard, true);
+  InitGameboard();
+  InitScoreboard();
+  InitMissionboard();
   gate.set_Gatepos(*stage);
   stage->Render(gameboard);
 }
@@ -39,7 +34,9 @@ void GameScene::Run() {
     if(player->isDead()) {
       break;
     }
-    stage->Render(gameboard);
+    UpdateGameBoard();
+    UpdateScoreBoard();
+    UpdateMissionBoard();
   }
   endwin();
 }
@@ -49,37 +46,67 @@ void GameScene::GameOver() {
   stage->Render(gameboard);
 }
 
-void GameScene::GameBoard(){
+void GameScene::InitGameboard() {
   int row, col;
   getmaxyx(gameboard, row, col);
   box(gameboard, 0, 0);
   attron(COLOR_PAIR(1));
   wbkgd(gameboard, COLOR_PAIR(1));
   mvwprintw(gameboard, 0, col/2-col/10, "GAME");
+  keypad(gameboard, true);
+  wrefresh(gameboard);
 }
 
-void GameScene::ScoreBoard() {
+void GameScene::InitScoreboard() {
   int row, col;
   getmaxyx(scoreboard, row, col);
   box(scoreboard, 0, 0);
   attron(COLOR_PAIR(1));
   wbkgd(scoreboard, COLOR_PAIR(1));
   mvwprintw(scoreboard, 0, col/2-col/5, "SCORE BOARD");
-  mvwprintw(scoreboard, 2, 2, "B : ");
-  mvwprintw(scoreboard, 4, 2, "+ : ");
-  mvwprintw(scoreboard, 6, 2, "- : ");
-  mvwprintw(scoreboard, 8, 2, "G : ");
+  mvwprintw(scoreboard, 2, 2, "B : 6");
+  mvwprintw(scoreboard, 4, 2, "+ : 0");
+  mvwprintw(scoreboard, 6, 2, "- : 0");
+  mvwprintw(scoreboard, 8, 2, "G : 0");
+  wrefresh(scoreboard);
 }
 
-void GameScene::MissionBoard() {
+void GameScene::InitMissionboard() {
   int row, col;
   getmaxyx(missionboard, row, col);
   box(missionboard, 0, 0);
   attron(COLOR_PAIR(1));
   wbkgd(missionboard, COLOR_PAIR(1));
   mvwprintw(missionboard, 0, col/2-col/5, "MISSION BOARD");
-  mvwprintw(missionboard, 2, 2, "B : 10 (v)");
-  mvwprintw(missionboard, 4, 2, "+ : 5  ( )");
-  mvwprintw(missionboard, 6, 2, "- : 2  ( )");
-  mvwprintw(missionboard, 8, 2, "G : 1  (v)");
+  string bm = "B : " + to_string(stage->objLen) + "( )";
+  string gm = "+ : " + to_string(stage->objGrowth) + "( )";
+  string rm = "- : " + to_string(stage->objReduce) + "( )";
+  string gam = "G : " + to_string(stage->objGate) + "( )";
+  mvwprintw(missionboard, 2, 2, to_char(bm));
+  mvwprintw(missionboard, 4, 2, to_char(gm));
+  mvwprintw(missionboard, 6, 2, to_char(rm));
+  mvwprintw(missionboard, 8, 2, to_char(gam));
+  wrefresh(missionboard);
+}
+
+void GameScene::UpdateGameBoard(){
+  stage->Render(gameboard);
+}
+
+void GameScene::UpdateScoreBoard() {
+  mvwprintw(scoreboard, 2, 6, to_char(player->getCurLen()));
+  mvwprintw(scoreboard, 4, 6, to_char(player->getGrowthNum()));
+  mvwprintw(scoreboard, 6, 6, to_char(player->getReduceNum()));
+  mvwprintw(scoreboard, 8, 6, to_char(player->getGateNum()));
+  wrefresh(scoreboard);
+}
+
+void GameScene::UpdateMissionBoard() {
+  wrefresh(missionboard);
+}
+
+char *GameScene::to_char(string s) {
+  char *tmp = new char[100];
+  strcpy(tmp, s.c_str());
+  return tmp;
 }

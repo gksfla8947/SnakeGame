@@ -2,9 +2,13 @@
 
 Snake::Snake(Map& map, int bodyNum) {
   size = bodyNum + 1;
+  maxSize = size;
   direction = 'r';
   dead = false;
   stage = &map;
+  growthNum = 0;
+  gateNum = 0;
+  reduceNum = 0;
 }
 
 // 스네이크의 생성위치(x, y값은 1부터 시작) 설정
@@ -108,6 +112,7 @@ void Snake::Collision(char type, Gate gate) {
     dead = true;
   }
   else if(type == '5') {
+    gateNum += 1;
     if(headPosY == gate.gate_X[0] && headPosX == gate.gate_Y[0]){
       if(gate.gate_X[1] == 0){
         headPosY = gate.gate_X[1] + 1;
@@ -156,6 +161,8 @@ void Snake::Collision(char type, Gate gate) {
 void Snake::Growth() {
   snake.push_back(make_pair(tailPosX, tailPosY));
   size+=1;
+  maxSize += 1;
+  growthNum += 1;
 }
 
 void Snake::Reduce() {
@@ -164,4 +171,5 @@ void Snake::Reduce() {
   tailPosX = snake[size-1].first;
   tailPosY = snake[size-1].second;
   size-=1;
+  reduceNum += 1;
 }

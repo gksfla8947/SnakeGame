@@ -12,10 +12,14 @@ using namespace std;
 
 class Map{
 public:
+  int objLen;
+  int objGrowth;
+  int objReduce;
+  int objGate;
   ifstream map_txt;
   char maps[HEIGHT][WIDTH];
 
-  Map();
+  Map(int objLen, int objGrowth, int objReduce, int objGate);
   ~Map();
 
   void Init();
