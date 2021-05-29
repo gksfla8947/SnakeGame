@@ -30,6 +30,7 @@ public:
 
   void Growth();
   void Reduce();
+  void changeDirection(char directions, int gx1, int gy1);
 
   int getCurLen() { return size; }
   int getMaxLen() { return maxSize; }

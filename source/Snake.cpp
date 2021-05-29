@@ -121,40 +121,135 @@ void Snake::Collision(char type, Gate gate) {
   }
   else if(type == '5') {
     gateNum += 1;
+    int gx, gy;
+    bool isup, isdown, isleft, isright;
     if(headPosY == gate.gate_X[0] && headPosX == gate.gate_Y[0]){
-      if(gate.gate_X[1] == 0){
-        headPosY = gate.gate_X[1] + 1;
-        headPosX = gate.gate_Y[1];
-      }
-      else if(gate.gate_X[1] == WIDTH-1){
-        headPosY = gate.gate_X[1] - 1;
-        headPosX = gate.gate_Y[1];
-      }
-      else if(gate.gate_Y[1] == 0){
-        headPosY = gate.gate_X[1];
-        headPosX = gate.gate_Y[1] + 1;
-      }
-      else if(gate.gate_Y[1] == HEIGHT-1){
-        headPosY = gate.gate_X[1];
-        headPosX = gate.gate_Y[1] - 1;
-      }
+      gx = gate.gate_X[1];
+      gy = gate.gate_Y[1];
     }
     else{
-      if(gate.gate_X[0] == 0){
-        headPosY = gate.gate_X[0] + 1;
-        headPosX = gate.gate_Y[0];
+      gx = gate.gate_X[0];
+      gy = gate.gate_Y[0];
+    }
+
+    isup = (stage->maps[gy+1][gx] == '0' || stage->maps[gy+1][gx] == '6' || stage->maps[gy+1][gx] == '7');
+    isdown = (stage->maps[gy-1][gx] == '0' || stage->maps[gy-1][gx] == '6' || stage->maps[gy-1][gx] == '7');
+    isleft = (stage->maps[gy][gx-1] == '0' || stage->maps[gy][gx-1] == '6' || stage->maps[gy][gx-1] == '7');
+    isright = (stage->maps[gy][gx+1] == '0' || stage->maps[gy][gx+1] == '6' || stage->maps[gy][gx+1] == '7');
+    if(gx == 0){
+      changeDirection('r', gx, gy);
+    }
+    else if(gx == WIDTH-1){
+      changeDirection('l', gx, gy);
+    }
+    else if(gy == 0){
+      changeDirection('d', gx, gy);
+    }
+    else if(gy == HEIGHT-1){
+      changeDirection('u', gx, gy);
+    }
+    else{
+      if(isright){ //right
+        if(isleft){ //left
+          if(isup){ //up
+            if(direction == 'u' || direction == 'd'){
+              changeDirection('u', gx, gy);
+            }
+            else{
+              changeDirection(direction, gx, gy);
+            }
+          }
+          else if(isdown){ //down
+            if(direction == 'u' || direction == 'd'){
+              changeDirection('d', gx, gy);
+            }
+            else{
+              changeDirection(direction, gx, gy);
+            }
+          }
+          else{
+            if(direction == 'r'){
+              changeDirection(direction, gx, gy);
+            }
+            else{
+              changeDirection('l', gx, gy);
+            }
+          }
+        }
+        else if(isup){ //up
+          if(direction == 'r' || direction == 'l'){
+            changeDirection('r', gx, gy);
+          }
+          else{
+            changeDirection('u', gx, gy);
+          }
+        }
+        else if(isdown){ //down
+          if(direction == 'r' || direction == 'l'){
+            changeDirection('r', gx, gy);
+          }
+          else{
+            changeDirection('d', gx, gy);
+          }
+        }
+        else{
+          changeDirection('r', gx, gy);
+        }
       }
-      else if(gate.gate_X[0] == WIDTH-1){
-        headPosY = gate.gate_X[0] - 1;
-        headPosX = gate.gate_Y[0];
+      else if(isup){ //up
+        if(isdown){ //down
+          if(isleft){
+            if(direction == 'r' || direction == 'l'){
+              changeDirection('l', gx, gy);
+            }
+            else{
+              changeDirection(direction, gx, gy);
+            }
+          }
+          else if(isright){
+            if(direction == 'r' || direction == 'l'){
+              changeDirection('r', gx, gy);
+            }
+            else{
+              changeDirection(direction, gx, gy);
+            }
+          }
+          else{
+            if(direction == 'r' || direction == 'u'){
+              changeDirection('u', gx, gy);
+            }
+            else{
+              changeDirection('d', gx, gy);
+            }
+          }
+        }
+        else if(isleft){ //left
+          if(direction == 'r' || direction == 'l'){
+            changeDirection('l', gx, gy);
+          }
+          else{
+            changeDirection('u', gx, gy);
+          }
+        }
+        else{
+          changeDirection('u', gx, gy);
+        }
       }
-      else if(gate.gate_Y[0] == 0){
-        headPosY = gate.gate_X[0];
-        headPosX = gate.gate_Y[0] + 1;
+      else if(isleft){ //left
+        if(isdown){ //down
+          if(direction == 'r' || direction == 'l'){
+            changeDirection('l', gx, gy);
+          }
+          else{
+            changeDirection('d', gx, gy);
+          }
+        }
+        else{
+          changeDirection('l', gx, gy);
+        }
       }
-      else if(gate.gate_Y[0] == HEIGHT-1){
-        headPosY = gate.gate_X[0];
-        headPosX = gate.gate_Y[0] - 1;
+      else{
+        changeDirection('d', gx, gy);
       }
     }
   }
@@ -180,4 +275,27 @@ void Snake::Reduce() {
   tailPosY = snake[size-1].second;
   size-=1;
   reduceNum += 1;
+}
+
+void Snake::changeDirection(char directions, int gx1, int gy1){
+  if(directions == 'u'){
+    headPosY = gx1;
+    headPosX = gy1 - 1;
+    direction = 'u';
+  }
+  else if(directions == 'd'){
+    headPosY = gx1;
+    headPosX = gy1 + 1;
+    direction = 'd';
+  }
+  else if(directions == 'l'){
+    headPosY = gx1 - 1;
+    headPosX = gy1;
+    direction = 'l';
+  }
+  else if(directions == 'r'){
+    headPosY = gx1 + 1;
+    headPosX = gy1;
+    direction = 'r';
+  }
 }
