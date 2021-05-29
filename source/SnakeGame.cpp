@@ -2,7 +2,9 @@
 
 SnakeGame::SnakeGame(int objLevel) {
   intro = new StartScene();
-  endScene = new GameoverScene();
+  clearScene = new GameclearScene();
+  overScene = new GameoverScene();
+  endScene = new EndScene();
   this->objLevel = objLevel;
 }
 void SnakeGame::startGame() {
@@ -11,14 +13,13 @@ void SnakeGame::startGame() {
     inGame = new GameScene(curLevel);
     inGame->Run();
     if(inGame->isClear) {
+      clearScene->Draw();
       curLevel += 1;
       if(curLevel > objLevel) break;
     }
-    endScene->Draw();
+    else {
+      overScene->Draw();
+    }
   }
-  initscr();
-  printw("The End");
-  refresh();
-  getch();
-  endwin();
+  endScene->Draw();
 }

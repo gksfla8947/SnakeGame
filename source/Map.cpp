@@ -1,58 +1,52 @@
 #include"Map.h"
 
-Map::Map(int level, int objLen, int objGrowth, int objReduce, int objGate){
+Map::Map(int level) {
   this->mapUrl = "stage/stage" + to_string(level) + ".txt";
-  this->objLen = objLen;
-  this->objGrowth = objGrowth;
-  this->objReduce = objReduce;
-  this->objGate = objGate;
   map_txt.open(this->mapUrl);
 }
 
 Map::~Map(){
-
-}
-
-void Map::make_item(){
-  srand(time(NULL));
-  int num = 0;  //현재 아이템의 개수
-  int growth_Item = rand() % 3;  //Growth Item 개수
-  int grow_num = 0;  //현재 Growth Item 개수
-  int tmpx, tmpy;    //좌표
-
-  while(num<4){ //동시에 나타날 수 있는 아이템의 최대수:4
-    tmpx = rand()%WIDTH;  //실행할때마다 좌표값 달라짐
-    tmpy = rand()%HEIGHT;
-
-    if(maps[tmpy][tmpx] != '0')
-      continue;
-
-    /*for (int i=0; i<snake.size(); i++)  //아이템의 위치가 스네이크 body의 위치일 경우
-      if (snake[i].x == tmpx && snake[i].y == tmpy) continue;*/
-
-    if (grow_num < growth_Item) {   //Growth Item생성
-      maps[tmpy][tmpx] = '6';
-      num++;
-      grow_num++;
-      continue;
-    }
-
-    //Poison Item 생성
-    maps[tmpy][tmpx] = '7';
-    num++;
-  }
 }
 
 void Map::Init(){
-
   int map_height = 0;
   while (!map_txt.eof())
   {
-    char temp[100];
-    map_txt.getline(temp, 100);
-    for (int i = 0; i < WIDTH; i++)
-    {
-      maps[map_height][i] = temp[i];
+    char temp[200];
+    map_txt.getline(temp, 200);
+    if(map_height == 0) {
+      string tmp;
+      for(int i = 0; i < 3; i++) {
+        tmp += temp[i];
+      }
+      objLen = stoi(tmp);
+    }
+    else if(map_height == 1) {
+      string tmp;
+      for(int i = 0; i < 3; i++) {
+        tmp += temp[i];
+      }
+      objGrowth = stoi(tmp);
+    }
+    else if(map_height == 2) {
+      string tmp;
+      for(int i = 0; i < 3; i++) {
+        tmp += temp[i];
+      }
+      objReduce = stoi(tmp);
+    }
+    else if(map_height == 3) {
+      string tmp;
+      for(int i = 0; i < 3; i++) {
+        tmp += temp[i];
+      }
+      objGate = stoi(tmp);
+    }
+    else {
+      for (int i = 0; i < WIDTH; i++)
+      {
+        maps[map_height-4][i] = temp[i];
+      }
     }
     map_height++;
   }
@@ -105,4 +99,34 @@ void Map::Render(WINDOW *board){
 
 void Map::Update(int x, int y, char value) {
   maps[x][y] = value;
+}
+
+void Map::make_item(){
+  srand(time(NULL));
+  int num = 0;  //현재 아이템의 개수
+  int growth_Item = rand() % 3;  //Growth Item 개수
+  int grow_num = 0;  //현재 Growth Item 개수
+  int tmpx, tmpy;    //좌표
+
+  while(num<4){ //동시에 나타날 수 있는 아이템의 최대수:4
+    tmpx = rand()%WIDTH;  //실행할때마다 좌표값 달라짐
+    tmpy = rand()%HEIGHT;
+
+    if(maps[tmpy][tmpx] != '0')
+      continue;
+
+    /*for (int i=0; i<snake.size(); i++)  //아이템의 위치가 스네이크 body의 위치일 경우
+      if (snake[i].x == tmpx && snake[i].y == tmpy) continue;*/
+
+    if (grow_num < growth_Item) {   //Growth Item생성
+      maps[tmpy][tmpx] = '6';
+      num++;
+      grow_num++;
+      continue;
+    }
+
+    //Poison Item 생성
+    maps[tmpy][tmpx] = '7';
+    num++;
+  }
 }

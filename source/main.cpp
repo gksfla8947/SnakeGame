@@ -1,6 +1,6 @@
 #include"SnakeGame.h"
 
 int main() {
-  SnakeGame *game = new SnakeGame(2);
+  SnakeGame *game = new SnakeGame(3);
   game->startGame();
 }

@@ -4,11 +4,11 @@ GameScene::GameScene(int level) {
   gameboard = newwin(LINES, COLS/2+40, 0, 0);
   scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
   missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
-  stage = new Map(level, 2, 0, 0, 1);
-  player = new Snake(*stage, 5);
-  isClear = false;
+  stage = new Map(level);
   stage->Init();
+  player = new Snake(*stage, 5);
   gate.Init();
+  isClear = false;
   player->init_snake_pos(1, 7);
 }
 

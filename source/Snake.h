@@ -25,6 +25,7 @@ public:
   void move(int ch, Gate gate);
   bool isDead();
   void Collision(char type, Gate gate);
+  void changeDirection(char directions, int gx1, int gy1);
 
   void Render();
 

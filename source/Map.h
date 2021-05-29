@@ -3,12 +3,13 @@
 #include<fstream>
 #include<iostream>
 #include<ctime>
+#include<map>
 #include<cstdlib>
 
 using namespace std;
 
-#define HEIGHT 21
-#define WIDTH 70
+#define WIDTH 110
+#define HEIGHT 30
 
 class Map{
   int objLen;
@@ -20,7 +21,7 @@ public:
   ifstream map_txt;
   char maps[HEIGHT][WIDTH];
 
-  Map(int level, int objLen, int objGrowth, int objReduce, int objGate);
+  Map(int level);
   ~Map();
 
   void Init();
