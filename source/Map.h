@@ -8,18 +8,19 @@
 using namespace std;
 
 #define HEIGHT 21
-#define WIDTH 21
+#define WIDTH 70
 
 class Map{
   int objLen;
   int objGrowth;
   int objReduce;
   int objGate;
+  string mapUrl;
 public:
   ifstream map_txt;
   char maps[HEIGHT][WIDTH];
 
-  Map(int objLen, int objGrowth, int objReduce, int objGate);
+  Map(int level, int objLen, int objGrowth, int objReduce, int objGate);
   ~Map();
 
   void Init();

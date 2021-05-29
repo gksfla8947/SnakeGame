@@ -1,10 +1,12 @@
 #include"Map.h"
 
-Map::Map(int objLen, int objGrowth, int objReduce, int objGate){
+Map::Map(int level, int objLen, int objGrowth, int objReduce, int objGate){
+  this->mapUrl = "stage/stage" + to_string(level) + ".txt";
   this->objLen = objLen;
   this->objGrowth = objGrowth;
   this->objReduce = objReduce;
   this->objGate = objGate;
+  map_txt.open(this->mapUrl);
 }
 
 Map::~Map(){
@@ -18,7 +20,7 @@ void Map::make_item(){
   int grow_num = 0;  //현재 Growth Item 개수
   int tmpx, tmpy;    //좌표
 
-  while(num<3){ //동시에 나타날 수 있는 아이템의 최대수:3
+  while(num<4){ //동시에 나타날 수 있는 아이템의 최대수:4
     tmpx = rand()%WIDTH;  //실행할때마다 좌표값 달라짐
     tmpy = rand()%HEIGHT;
 
@@ -42,7 +44,6 @@ void Map::make_item(){
 }
 
 void Map::Init(){
-  map_txt.open("stage/stage1.txt");
 
   int map_height = 0;
   while (!map_txt.eof())
@@ -57,7 +58,7 @@ void Map::Init(){
   }
 }
 
-void Map::Render(WINDOW *map){
+void Map::Render(WINDOW *board){
   init_pair(5, COLOR_WHITE, COLOR_WHITE);
   init_pair(2, COLOR_GREEN, COLOR_GREEN);
   init_pair(3, COLOR_RED, COLOR_RED);
@@ -72,34 +73,34 @@ void Map::Render(WINDOW *map){
       switch (maps[i][j])
       {
         case '0':
-          mvwaddch(map, i+1, j+1, ' ' | COLOR_PAIR(5)); // 공백
+          mvwaddch(board, i+1, j+1, ' ' | COLOR_PAIR(5)); // 공백
           break;
         case '1':
-          mvwaddch(map, i+1, j+1, '#' | COLOR_PAIR(2)); // 벽
+          mvwaddch(board, i+1, j+1, '#' | COLOR_PAIR(2)); // 벽
           break;
         case '2':
-          mvwaddch(map, i+1, j+1, '@' | COLOR_PAIR(10)); // 벽
+          mvwaddch(board, i+1, j+1, '@' | COLOR_PAIR(10)); // 벽
           break;
         case '4':
-          mvwaddch(map, i+1, j+1, 'O' | COLOR_PAIR(3)); // 스네이크 머리
+          mvwaddch(board, i+1, j+1, 'O' | COLOR_PAIR(3)); // 스네이크 머리
           break;
         case '3':
-          mvwaddch(map, i+1, j+1, 'X' | COLOR_PAIR(4)); // 스네이크 몸
+          mvwaddch(board, i+1, j+1, 'X' | COLOR_PAIR(4)); // 스네이크 몸
           break;
         case '5':
-          mvwaddch(map, i+1, j+1, '^' | COLOR_PAIR(7)); // 게이트
+          mvwaddch(board, i+1, j+1, '^' | COLOR_PAIR(7)); // 게이트
           break;
         case '6':
-          mvwaddch(map, i+1, j+1, 'G' | COLOR_PAIR(8)); // Growth item
+          mvwaddch(board, i+1, j+1, 'G' | COLOR_PAIR(8)); // Growth item
           break;
         case '7':
-          mvwaddch(map, i+1, j+1, 'L' | COLOR_PAIR(9)); // Loss item
+          mvwaddch(board, i+1, j+1, 'L' | COLOR_PAIR(9)); // Loss item
           break;
       }
       //attroff(COLOR_PAIR(maps[i][j]));
     }
   }
-  wrefresh(map);
+  wrefresh(board);
 }
 
 void Map::Update(int x, int y, char value) {

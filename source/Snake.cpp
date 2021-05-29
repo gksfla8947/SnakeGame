@@ -1,14 +1,18 @@
 #include"Snake.h"
 
-Snake::Snake(Map& map, int bodyNum) {
+Snake::Snake(Map &map, int bodyNum) {
+  stage = &map;
   size = bodyNum + 1;
   maxSize = size;
   direction = 'r';
   dead = false;
-  stage = &map;
   growthNum = 0;
   gateNum = 0;
   reduceNum = 0;
+}
+
+Snake::~Snake() {
+  delete stage;
 }
 
 // 스네이크의 생성위치(x, y값은 1부터 시작) 설정
@@ -77,15 +81,19 @@ void Snake::move(int ch, Gate gate) {
   }
   if(direction == 'l') {
     headPosY -= 1;
+    usleep(200000);
   }
   else if(direction == 'r') {
     headPosY += 1;
+    usleep(200000);
   }
   else if(direction == 'u') {
     headPosX -= 1;
+    usleep(200000);
   }
   else if(direction == 'd') {
     headPosX += 1;
+    usleep(200000);
   }
   Collision(stage->maps[headPosX][headPosY], gate);
   if(!dead) {

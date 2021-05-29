@@ -2,6 +2,7 @@
 #include<vector>
 #include<utility>
 #include<cstring>
+#include<unistd.h>
 #include"Gate.h"
 using namespace std;
 
@@ -19,6 +20,7 @@ class Snake {
   Map *stage;
 public:
   Snake(Map& map, int bodyNum);
+  ~Snake();
   void init_snake_pos(int x = 1, int y = 1);
   void move(int ch, Gate gate);
   bool isDead();

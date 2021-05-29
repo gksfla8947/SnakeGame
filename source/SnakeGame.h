@@ -12,7 +12,9 @@ class SnakeGame {
   StartScene *intro;
   GameScene *inGame;
   GameoverScene *endScene;
+  int curLevel = 1;
+  int objLevel;
 public:
-  SnakeGame();
+  SnakeGame(int objLevel);
   void startGame();
 };

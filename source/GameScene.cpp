@@ -1,28 +1,36 @@
 #include"GameScene.h"
 
-GameScene::GameScene() {
+GameScene::GameScene(int level) {
+  gameboard = newwin(LINES, COLS/2+40, 0, 0);
+  scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
+  missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
+  stage = new Map(level, 2, 0, 0, 1);
+  player = new Snake(*stage, 5);
+  isClear = false;
+  stage->Init();
+  gate.Init();
+  player->init_snake_pos(1, 7);
+}
+
+GameScene::~GameScene() {
+}
+
+void GameScene::InitWindow() {
   initscr();
   start_color();
   curs_set(false);
   noecho();
   cbreak();
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
-  gameboard = newwin(LINES, COLS/2+40, 0, 0);
-  scoreboard = newwin(LINES/2, COLS/2-40, 0, COLS/2+40);
-  missionboard = newwin(LINES/2, COLS/2-40, LINES/2, COLS/2+40);
-  stage = new Map(7, 5, 2, 1);
-  stage->Init();
-  gate.Init();
-  player = new Snake(*stage, 5);
-  player->init_snake_pos(1, 12);
-}
-
-void GameScene::InitWindow() {
   InitGameboard();
   InitScoreboard();
   InitMissionboard();
+  UpdateGameBoard();
+  UpdateScoreBoard();
+  UpdateMissionBoard();
   gate.set_Gatepos(*stage);
   stage->Render(gameboard);
+  nodelay(gameboard, TRUE);
 }
 
 void GameScene::Run() {
@@ -31,12 +39,14 @@ void GameScene::Run() {
     int ch = wgetch(gameboard);
     if(ch == KEY_F(1)) break;
     player->move(ch, gate);
-    if(player->isDead()) {
-      break;
-    }
     UpdateGameBoard();
     UpdateScoreBoard();
     UpdateMissionBoard();
+    if(checkClear()) {
+      isClear = true;
+      break;
+    }
+    else if(player->isDead()) break;
   }
   endwin();
 }
@@ -54,7 +64,6 @@ void GameScene::InitGameboard() {
   wbkgd(gameboard, COLOR_PAIR(1));
   mvwprintw(gameboard, 0, col/2-col/10, "GAME");
   keypad(gameboard, true);
-  wrefresh(gameboard);
 }
 
 void GameScene::InitScoreboard() {
@@ -68,7 +77,6 @@ void GameScene::InitScoreboard() {
   mvwprintw(scoreboard, 4, 2, "+ : 0");
   mvwprintw(scoreboard, 6, 2, "- : 0");
   mvwprintw(scoreboard, 8, 2, "G : 0");
-  wrefresh(scoreboard);
 }
 
 void GameScene::InitMissionboard() {
@@ -78,15 +86,6 @@ void GameScene::InitMissionboard() {
   attron(COLOR_PAIR(1));
   wbkgd(missionboard, COLOR_PAIR(1));
   mvwprintw(missionboard, 0, col/2-col/5, "MISSION BOARD");
-  string bm = "B : " + to_string(stage->getObjLen()) + isAchieve(player->getCurLen(), stage->getObjLen());
-  string gm = "+ : " + to_string(stage->getObjGrowth()) + "( )";
-  string rm = "- : " + to_string(stage->getObjReduce()) + "( )";
-  string gam = "G : " + to_string(stage->getObjGate()) + "( )";
-  mvwprintw(missionboard, 2, 2, to_char(bm));
-  mvwprintw(missionboard, 4, 2, to_char(gm));
-  mvwprintw(missionboard, 6, 2, to_char(rm));
-  mvwprintw(missionboard, 8, 2, to_char(gam));
-  wrefresh(missionboard);
 }
 
 void GameScene::UpdateGameBoard(){
@@ -128,4 +127,13 @@ string GameScene::isAchieve(int cur, int goal) {
     res = "( )";
   }
   return res;
+}
+
+bool GameScene::checkClear() {
+  if(player->getCurLen() >= stage->getObjLen() && player->getGrowthNum() >= stage->getObjGrowth() && player->getReduceNum() >= stage->getObjReduce() && player->getGateNum() >= stage->getObjGate()) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }

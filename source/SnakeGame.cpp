@@ -1,12 +1,24 @@
 #include"SnakeGame.h"
 
-SnakeGame::SnakeGame() {
+SnakeGame::SnakeGame(int objLevel) {
   intro = new StartScene();
-  inGame = new GameScene();
   endScene = new GameoverScene();
+  this->objLevel = objLevel;
 }
 void SnakeGame::startGame() {
   intro->Draw();
-  inGame->Run();
-  endScene->Draw();
+  while(true) {
+    inGame = new GameScene(curLevel);
+    inGame->Run();
+    if(inGame->isClear) {
+      curLevel += 1;
+      if(curLevel > objLevel) break;
+    }
+    endScene->Draw();
+  }
+  initscr();
+  printw("The End");
+  refresh();
+  getch();
+  endwin();
 }

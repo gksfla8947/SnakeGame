@@ -12,7 +12,10 @@ class GameScene {
   Snake *player;
   Gate gate;
 public:
-  GameScene();
+  bool isClear;
+
+  GameScene(int level);
+  ~GameScene();
   void InitWindow();
   void InitGameboard();
   void InitScoreboard();
@@ -28,4 +31,6 @@ public:
   char *to_char(string s);
 
   string isAchieve(int cur, int goal);
+
+  bool checkClear();
 };
