@@ -29,9 +29,9 @@ public:
   void Growth();
   void Reduce();
 
-  string getCurLen() { return to_string(size); }
-  string getMaxLen() { return to_string(maxSize); }
-  string getGrowthNum() { return to_string(growthNum); }
-  string getReduceNum() { return to_string(reduceNum); }
-  string getGateNum() { return to_string(gateNum); }
+  int getCurLen() { return size; }
+  int getMaxLen() { return maxSize; }
+  int getGrowthNum() { return growthNum; }
+  int getReduceNum() { return reduceNum; }
+  int getGateNum() { return gateNum; }
 };

@@ -26,4 +26,6 @@ public:
   void UpdateMissionBoard();
 
   char *to_char(string s);
+
+  string isAchieve(int cur, int goal);
 };

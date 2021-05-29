@@ -11,11 +11,11 @@ using namespace std;
 #define WIDTH 21
 
 class Map{
-public:
   int objLen;
   int objGrowth;
   int objReduce;
   int objGate;
+public:
   ifstream map_txt;
   char maps[HEIGHT][WIDTH];
 
@@ -26,4 +26,9 @@ public:
   void Render(WINDOW *map);
   void Update(int x, int y, char value);
   void make_item();
+
+  int getObjLen() { return objLen; }
+  int getObjGrowth() { return objGrowth; }
+  int getObjReduce() { return objReduce; }
+  int getObjGate() { return objGate; }
 };
