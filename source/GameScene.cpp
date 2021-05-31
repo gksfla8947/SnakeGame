@@ -29,7 +29,7 @@ void GameScene::InitWindow() {
   UpdateScoreBoard();
   UpdateMissionBoard();
   gate.set_Gatepos(*stage);
-  stage->Render(gameboard);
+  stage->make_item();  //시작할 때 아이템 배치
   nodelay(gameboard, TRUE);
 }
 
@@ -42,6 +42,10 @@ void GameScene::Run() {
     UpdateGameBoard();
     UpdateScoreBoard();
     UpdateMissionBoard();
+    ///추가된 부분
+    stage->check_item();  //5초 이상 지났는지 체크해서
+    stage->Render(gameboard);   //아이템 재배치
+    //////
     if(checkClear()) {
       isClear = true;
       break;

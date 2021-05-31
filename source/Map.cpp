@@ -102,21 +102,20 @@ void Map::Update(int x, int y, char value) {
 }
 
 void Map::make_item(){
+  startT = time(NULL);
+
   srand(time(NULL));
   int num = 0;  //현재 아이템의 개수
   int growth_Item = rand() % 3;  //Growth Item 개수
   int grow_num = 0;  //현재 Growth Item 개수
   int tmpx, tmpy;    //좌표
 
-  while(num<4){ //동시에 나타날 수 있는 아이템의 최대수:4
+  while(num<3){ //동시에 나타날 수 있는 아이템의 최대수:3
     tmpx = rand()%WIDTH;  //실행할때마다 좌표값 달라짐
     tmpy = rand()%HEIGHT;
 
     if(maps[tmpy][tmpx] != '0')
       continue;
-
-    /*for (int i=0; i<snake.size(); i++)  //아이템의 위치가 스네이크 body의 위치일 경우
-      if (snake[i].x == tmpx && snake[i].y == tmpy) continue;*/
 
     if (grow_num < growth_Item) {   //Growth Item생성
       maps[tmpy][tmpx] = '6';
@@ -129,4 +128,17 @@ void Map::make_item(){
     maps[tmpy][tmpx] = '7';
     num++;
   }
+}
+
+void Map::check_item() {
+  nowT = time(NULL);
+
+	if(nowT - startT > 5){  //5초 이상 지났을 경우
+    for (int i=0; i<30; i++) {   //아이템의 위치 지움
+      for (int j=0; j<110; j++) {
+        if (maps[i][j]=='6' || maps[i][j]=='7') maps[i][j]='0';
+      }
+    }
+		make_item();
+	}
 }

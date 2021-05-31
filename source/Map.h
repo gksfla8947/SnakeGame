@@ -17,9 +17,12 @@ class Map{
   int objReduce;
   int objGate;
   string mapUrl;
+
 public:
   ifstream map_txt;
   char maps[HEIGHT][WIDTH];
+  time_t nowT;
+  time_t startT;
 
   Map(int level);
   ~Map();
@@ -28,6 +31,7 @@ public:
   void Render(WINDOW *map);
   void Update(int x, int y, char value);
   void make_item();
+  void check_item();
 
   int getObjLen() { return objLen; }
   int getObjGrowth() { return objGrowth; }
