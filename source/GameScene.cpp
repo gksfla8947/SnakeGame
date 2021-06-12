@@ -7,9 +7,8 @@ GameScene::GameScene(int level) {
   stage = new Map(level);
   stage->Init();
   player = new Snake(*stage, 5);
-  gate.Init();
-  isClear = false;
   player->init_snake_pos(1, 7);
+  isClear = false;
 }
 
 GameScene::~GameScene() {
@@ -28,8 +27,8 @@ void GameScene::InitWindow() {
   UpdateGameBoard();
   UpdateScoreBoard();
   UpdateMissionBoard();
-  gate.set_Gatepos(*stage);
   stage->make_item();  //시작할 때 아이템 배치
+  stage->set_Gatepos();
   nodelay(gameboard, TRUE);
 }
 
@@ -38,14 +37,15 @@ void GameScene::Run() {
   while(true) {
     int ch = wgetch(gameboard);
     if(ch == KEY_F(1)) break;
-    player->move(ch, gate);
+    player->move(ch);
+    stage->check_item();  //5초 이상 지났는지 체크해서 아이템 재배치
+    if(!player->inGate) {
+      stage->GateUpdate();
+    }
     UpdateGameBoard();
     UpdateScoreBoard();
     UpdateMissionBoard();
-    ///추가된 부분
-    stage->check_item();  //5초 이상 지났는지 체크해서
-    stage->Render(gameboard);   //아이템 재배치
-    //////
+
     if(checkClear()) {
       isClear = true;
       break;

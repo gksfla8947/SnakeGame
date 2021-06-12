@@ -3,6 +3,10 @@
 Map::Map(int level) {
   this->mapUrl = "stage/stage" + to_string(level) + ".txt";
   map_txt.open(this->mapUrl);
+  for(int i = 0; i < 2; i++){
+    gate_X[i] = 0;
+    gate_Y[i] = 0;
+  }
 }
 
 Map::~Map(){
@@ -106,7 +110,7 @@ void Map::make_item(){
 
   srand(time(NULL));
   int num = 0;  //현재 아이템의 개수
-  int growth_Item = rand() % 10;  //Growth Item 개수
+  int growth_Item = 3;  //Growth Item 개수
   int grow_num = 0;  //현재 Growth Item 개수
   int tmpx, tmpy;    //좌표
 
@@ -140,5 +144,36 @@ void Map::check_item() {
       }
     }
 		make_item();
+	}
+}
+
+void Map::set_Gatepos(){
+  gate_startT = time(NULL);
+
+  srand(time(NULL));
+  int x = 0;
+  int y = 0;
+  int gateCount = 0;
+  while(gateCount < 2){
+    x = rand() % WIDTH;
+    y = rand() % HEIGHT;
+    if(maps[y][x] == '1'){
+      maps[y][x] = '5';
+      gate_X[gateCount] = x;
+      gate_Y[gateCount] = y;
+      gateCount++;
+    }
+  }
+}
+
+void Map::GateUpdate(){
+  gate_nowT = time(NULL);
+  if(nowT - startT > 4) {
+    for (int i=0; i<30; i++) {   //아이템의 위치 지움
+      for (int j=0; j<110; j++) {
+        if (maps[i][j]=='5') maps[i][j]='1';
+      }
+    }
+    set_Gatepos();
 	}
 }

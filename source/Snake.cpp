@@ -8,7 +8,9 @@ Snake::Snake(Map &map, int bodyNum) {
   dead = false;
   growthNum = 0;
   gateNum = 0;
+  inGate = false;
   reduceNum = 0;
+  cnt = 0;
 }
 
 Snake::~Snake() {
@@ -36,7 +38,7 @@ void Snake::init_snake_pos(int x, int y) {
   }
 }
 
-void Snake::move(int ch, Gate gate) {
+void Snake::move(int ch) {
   for(int i = size-1; i > 0; i--) {
     snake[i].first = snake[i-1].first;
     snake[i].second = snake[i-1].second;
@@ -95,7 +97,7 @@ void Snake::move(int ch, Gate gate) {
     headPosX += 1;
     usleep(200000);
   }
-  Collision(stage->maps[headPosX][headPosY], gate);
+  Collision(stage->maps[headPosX][headPosY]);
   if(!dead) {
     snake[0].first = headPosX;
     snake[0].second = headPosY;
@@ -109,27 +111,34 @@ void Snake::move(int ch, Gate gate) {
       stage->Update(snake[i].first, snake[i].second, '3');
     }
   }
+  if(inGate) {
+    if(cnt > size) {
+      inGate = false;
+    }
+    cnt++;
+  }
 }
 
 bool Snake::isDead() {
   return dead;
 }
 
-void Snake::Collision(char type, Gate gate) {
+void Snake::Collision(char type) {
   if(type == '1' || type == '2' || type == '3') {
     dead = true;
   }
   else if(type == '5') {
+    inGate = true;
     gateNum += 1;
     int gx, gy;
     bool isup, isdown, isleft, isright;
-    if(headPosY == gate.gate_X[0] && headPosX == gate.gate_Y[0]){
-      gx = gate.gate_X[1];
-      gy = gate.gate_Y[1];
+    if(headPosY == stage->gate_X[0] && headPosX == stage->gate_Y[0]){
+      gx = stage->gate_X[1];
+      gy = stage->gate_Y[1];
     }
     else{
-      gx = gate.gate_X[0];
-      gy = gate.gate_Y[0];
+      gx = stage->gate_X[0];
+      gy = stage->gate_Y[0];
     }
 
     isup = (stage->maps[gy+1][gx] == '0' || stage->maps[gy+1][gx] == '6' || stage->maps[gy+1][gx] == '7');
@@ -275,6 +284,9 @@ void Snake::Reduce() {
   tailPosX = snake[size-1].first;
   tailPosY = snake[size-1].second;
   size-=1;
+  if(size < 3) {
+    dead = true;
+  }
   reduceNum += 1;
 }
 

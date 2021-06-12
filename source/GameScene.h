@@ -10,7 +10,6 @@ class GameScene {
   WINDOW *missionboard;
   Map *stage;
   Snake *player;
-  Gate gate;
 public:
   bool isClear;
 

@@ -24,6 +24,11 @@ public:
   time_t nowT;
   time_t startT;
 
+  int gate_X[2];
+  int gate_Y[2];
+  time_t gate_nowT;
+  time_t gate_startT;
+
   Map(int level);
   ~Map();
 
@@ -33,8 +38,12 @@ public:
   void make_item();
   void check_item();
 
+  void GateUpdate();
+  void set_Gatepos();
+
   int getObjLen() { return objLen; }
   int getObjGrowth() { return objGrowth; }
   int getObjReduce() { return objReduce; }
   int getObjGate() { return objGate; }
+
 };

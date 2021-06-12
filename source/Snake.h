@@ -3,7 +3,7 @@
 #include<utility>
 #include<cstring>
 #include<unistd.h>
-#include"Gate.h"
+#include"Map.h"
 using namespace std;
 
 class Snake {
@@ -13,18 +13,20 @@ class Snake {
   int growthNum;
   int reduceNum;
   int gateNum;
+  int cnt;
   char direction;
   int headPosX, headPosY;
   int tailPosX, tailPosY;
   bool dead;
   Map *stage;
 public:
+  bool inGate;
   Snake(Map& map, int bodyNum);
   ~Snake();
   void init_snake_pos(int x = 1, int y = 1);
-  void move(int ch, Gate gate);
+  void move(int ch);
   bool isDead();
-  void Collision(char type, Gate gate);
+  void Collision(char type);
   void changeDirection(char directions, int gx1, int gy1);
 
   void Render();
