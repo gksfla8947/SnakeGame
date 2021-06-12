@@ -97,7 +97,7 @@ void GameScene::UpdateGameBoard(){
 }
 
 void GameScene::UpdateScoreBoard() {
-  mvwprintw(scoreboard, 2, 6, to_char(to_string(player->getCurLen())));
+  mvwprintw(scoreboard, 2, 6, to_char(to_string(player->getCurLen()) + "/" + to_string(player->getMaxLen())));
   mvwprintw(scoreboard, 4, 6, to_char(to_string(player->getGrowthNum())));
   mvwprintw(scoreboard, 6, 6, to_char(to_string(player->getReduceNum())));
   mvwprintw(scoreboard, 8, 6, to_char(to_string(player->getGateNum())));

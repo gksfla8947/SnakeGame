@@ -81,11 +81,11 @@ void Snake::move(int ch, Gate gate) {
   }
   if(direction == 'l') {
     headPosY -= 1;
-    usleep(200000);
+    usleep(100000);
   }
   else if(direction == 'r') {
     headPosY += 1;
-    usleep(200000);
+    usleep(100000);
   }
   else if(direction == 'u') {
     headPosX -= 1;
@@ -264,7 +264,8 @@ void Snake::Collision(char type, Gate gate) {
 void Snake::Growth() {
   snake.push_back(make_pair(tailPosX, tailPosY));
   size+=1;
-  maxSize += 1;
+  if(size > maxSize)
+    maxSize += 1;
   growthNum += 1;
 }
 
