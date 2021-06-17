@@ -141,10 +141,6 @@ void Snake::Collision(char type) {
       gy = stage->gate_Y[0];
     }
 
-    isup = (stage->maps[gy+1][gx] == '0' || stage->maps[gy+1][gx] == '6' || stage->maps[gy+1][gx] == '7');
-    isdown = (stage->maps[gy-1][gx] == '0' || stage->maps[gy-1][gx] == '6' || stage->maps[gy-1][gx] == '7');
-    isleft = (stage->maps[gy][gx-1] == '0' || stage->maps[gy][gx-1] == '6' || stage->maps[gy][gx-1] == '7');
-    isright = (stage->maps[gy][gx+1] == '0' || stage->maps[gy][gx+1] == '6' || stage->maps[gy][gx+1] == '7');
     if(gx == 0){
       changeDirection('r', gx, gy);
     }
@@ -158,107 +154,29 @@ void Snake::Collision(char type) {
       changeDirection('u', gx, gy);
     }
     else{
-      if(isright){ //right
-        if(isleft){ //left
-          if(isup){ //up
-            if(direction == 'u' || direction == 'd'){
-              changeDirection('u', gx, gy);
-            }
-            else{
-              changeDirection(direction, gx, gy);
-            }
-          }
-          else if(isdown){ //down
-            if(direction == 'u' || direction == 'd'){
-              changeDirection('d', gx, gy);
-            }
-            else{
-              changeDirection(direction, gx, gy);
-            }
-          }
-          else{
-            if(direction == 'r'){
-              changeDirection(direction, gx, gy);
-            }
-            else{
-              changeDirection('l', gx, gy);
-            }
-          }
-        }
-        else if(isup){ //up
-          if(direction == 'r' || direction == 'l'){
-            changeDirection('r', gx, gy);
-          }
-          else{
-            changeDirection('u', gx, gy);
-          }
-        }
-        else if(isdown){ //down
-          if(direction == 'r' || direction == 'l'){
-            changeDirection('r', gx, gy);
-          }
-          else{
-            changeDirection('d', gx, gy);
-          }
-        }
-        else{
-          changeDirection('r', gx, gy);
-        }
+      if(direction == 'r') {
+        if(stage->maps[gy][gx+1] != '1' && stage->maps[gy][gx+1] != '2') changeDirection('r', gx, gy);
+        else if(stage->maps[gy+1][gx] != '1' && stage->maps[gy+1][gx] != '2') changeDirection('d', gx, gy);
+        else if(stage->maps[gy-1][gx] != '1' && stage->maps[gy-1][gx] != '2') changeDirection('u', gx, gy);
+        else if(stage->maps[gy][gx-1] != '1' && stage->maps[gy][gx-1] != '2') changeDirection('l', gx, gy);
       }
-      else if(isup){ //up
-        if(isdown){ //down
-          if(isleft){
-            if(direction == 'r' || direction == 'l'){
-              changeDirection('l', gx, gy);
-            }
-            else{
-              changeDirection(direction, gx, gy);
-            }
-          }
-          else if(isright){
-            if(direction == 'r' || direction == 'l'){
-              changeDirection('r', gx, gy);
-            }
-            else{
-              changeDirection(direction, gx, gy);
-            }
-          }
-          else{
-            if(direction == 'r' || direction == 'u'){
-              changeDirection('u', gx, gy);
-            }
-            else{
-              changeDirection('d', gx, gy);
-            }
-          }
-        }
-        else if(isleft){ //left
-          if(direction == 'r' || direction == 'l'){
-            changeDirection('l', gx, gy);
-          }
-          else{
-            changeDirection('u', gx, gy);
-          }
-        }
-        else{
-          changeDirection('u', gx, gy);
-        }
+      else if(direction == 'd') {
+        if(stage->maps[gy+1][gx] != '1' && stage->maps[gy+1][gx] != '2') changeDirection('d', gx, gy);
+        else if(stage->maps[gy][gx-1] != '1' && stage->maps[gy][gx-1] != '2') changeDirection('l', gx, gy);
+        else if(stage->maps[gy][gx+1] != '1' && stage->maps[gy][gx+1] != '2') changeDirection('r', gx, gy);
+        else if(stage->maps[gy-1][gx] != '1' && stage->maps[gy-1][gx] != '2') changeDirection('u', gx, gy);
       }
-      else if(isleft){ //left
-        if(isdown){ //down
-          if(direction == 'r' || direction == 'l'){
-            changeDirection('l', gx, gy);
-          }
-          else{
-            changeDirection('d', gx, gy);
-          }
-        }
-        else{
-          changeDirection('l', gx, gy);
-        }
+      else if(direction == 'l') {
+        if(stage->maps[gy][gx-1] != '1' && stage->maps[gy][gx-1] != '2') changeDirection('l', gx, gy);
+        else if(stage->maps[gy-1][gx] != '1' && stage->maps[gy-1][gx] != '2') changeDirection('u', gx, gy);
+        else if(stage->maps[gy+1][gx] != '1' && stage->maps[gy+1][gx] != '2') changeDirection('d', gx, gy);
+        else if(stage->maps[gy][gx+1] != '1' && stage->maps[gy][gx+1] != '2') changeDirection('r', gx, gy);
       }
-      else{
-        changeDirection('d', gx, gy);
+      else if(direction == 'u') {
+        if(stage->maps[gy-1][gx] != '1' && stage->maps[gy-1][gx] != '2') changeDirection('u', gx, gy);
+        else if(stage->maps[gy][gx+1] != '1' && stage->maps[gy][gx+1] != '2') changeDirection('r', gx, gy);
+        else if(stage->maps[gy][gx-1] != '1' && stage->maps[gy][gx-1] != '2') changeDirection('l', gx, gy);
+        else if(stage->maps[gy+1][gx] != '1' && stage->maps[gy+1][gx] != '2') changeDirection('d', gx, gy);
       }
     }
   }

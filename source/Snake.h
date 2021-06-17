@@ -3,6 +3,7 @@
 #include<utility>
 #include<cstring>
 #include<unistd.h>
+#include<map>
 #include"Map.h"
 using namespace std;
 
