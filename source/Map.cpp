@@ -110,11 +110,11 @@ void Map::make_item(){
 
   srand(time(NULL));
   int num = 0;  //현재 아이템의 개수
-  int growth_Item = 3;  //Growth Item 개수
+  int growth_Item = rand() % 3;  //Growth Item 개수
   int grow_num = 0;  //현재 Growth Item 개수
   int tmpx, tmpy;    //좌표
 
-  while(num<20){ //동시에 나타날 수 있는 아이템의 최대수:3
+  while(num<3){ //동시에 나타날 수 있는 아이템의 최대수:3
     tmpx = rand()%WIDTH;  //실행할때마다 좌표값 달라짐
     tmpy = rand()%HEIGHT;
 
