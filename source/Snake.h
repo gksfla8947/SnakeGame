@@ -7,6 +7,10 @@
 #include"Map.h"
 using namespace std;
 
+/*
+* @author 김한림(20203055) 김영광(20203042)
+*/
+
 class Snake {
   vector<pair<int, int> > snake;
   int size;
@@ -22,19 +26,18 @@ class Snake {
   Map *stage;
 public:
   bool inGate;
-  Snake(Map& map, int bodyNum);
+  Snake(Map& map, int bodyNum); // 김한림
   ~Snake();
-  void init_snake_pos(int x = 1, int y = 1);
-  void move(int ch);
-  bool isDead();
-  void Collision(char type);
-  void changeDirection(char directions, int gx1, int gy1);
+  void init_snake_pos(int x = 1, int y = 1); // 김한림
+  void move(int ch); // 김한림 김영광
+  bool isDead(); // 김한림
+  void Collision(char type); // 김한림, 김영광
+  void changeDirection(char directions, int gx1, int gy1); // 김영광
 
-  void Render();
+  void Growth(); // 김한림
+  void Reduce(); // 김한림 김영광
 
-  void Growth();
-  void Reduce();
-
+  // 게터: 김한림
   int getCurLen() { return size; }
   int getMaxLen() { return maxSize; }
   int getGrowthNum() { return growthNum; }

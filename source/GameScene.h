@@ -4,6 +4,11 @@
 #include"Snake.h"
 using namespace std;
 
+/*
+* @author 김한림(20203055) 김영광() 이다은(20203112)
+* Run함수 제외 김한림 구현
+*/
+
 class GameScene {
   WINDOW *gameboard;
   WINDOW *scoreboard;
@@ -20,7 +25,7 @@ public:
   void InitScoreboard();
   void InitMissionboard();
 
-  void Run();
+  void Run(); // 김한림, 김영광 공동작업
   void GameOver();
 
   void UpdateGameBoard();
