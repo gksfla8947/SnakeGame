@@ -169,7 +169,7 @@ void Map::set_Gatepos(){
 void Map::GateUpdate(){
   gate_nowT = time(NULL);
   if(nowT - startT > 4) {
-    for (int i=0; i<30; i++) {   //아이템의 위치 지움
+    for (int i=0; i<30; i++) {  
       for (int j=0; j<110; j++) {
         if (maps[i][j]=='5') maps[i][j]='1';
       }
